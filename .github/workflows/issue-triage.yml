@@ -18,8 +18,14 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
+      - name: Get YML Paths
+        uses: CumulusDS/get-yaml-paths-action@v0.1.0
+        with:
+          file: ./tag-mapping.yml
+          run: console.log(mapping)
       - name: Transfer Issue
         uses: actions/github-script@v5
+        if: ${{ github.event.issue.state == 'open' }}
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
@@ -34,6 +40,7 @@ jobs:
             })
       - name: Close Current Issue
         uses: actions/github-script@v5
+        if: ${{ github.event.issue.state == 'open' }}
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
