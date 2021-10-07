@@ -15,5 +15,5 @@ jobs:
           - ubuntu-20.04
     steps:
       - name: Echo
-        uses: echo ${{ github.event.issue }}
+        run: echo ${{ github.event.issue }}
 
