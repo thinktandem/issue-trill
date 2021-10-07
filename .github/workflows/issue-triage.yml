@@ -15,6 +15,7 @@ jobs:
           - ubuntu-20.04
         tag-mappings:
           - bug: issue-transfer
+          - trill: tronic
     steps:
       - name: View the github context
         run: echo "$GITHUB_CONTEXT"
@@ -23,6 +24,7 @@ jobs:
       - name: Verify output
         run: |
           echo "${{ matrix.tag-mappings.bug }}"
+          echo "${{ matrix.tag-mappings.trill }}"
       - name: Transfer Issue
         uses: actions/github-script@v5
         if: ${{ github.event.issue.state == 'open' }}
