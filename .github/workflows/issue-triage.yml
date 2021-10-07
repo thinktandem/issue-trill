@@ -20,7 +20,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
       - name: Parse Mappings
         id: parse
-        uses: KJ002/read-yaml@v1.5
+        uses: KJ002/read-yaml@1.5
         with:
           file: './files/tag-mapping.yml'
           key-path: '["mappings"]'
