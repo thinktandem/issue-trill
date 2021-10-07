@@ -24,9 +24,9 @@ jobs:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
             let labels = [];
-            context.issue.labels.forEach((label) => {
-                labels.push(label.name)
-            });
+            const l = ${{ github.event.issue.labels }};
+            console.log(l);
+
             github.rest.issues.create({
               owner: 'thinktandem',
               repo: 'issue-transfer',
