@@ -19,5 +19,5 @@ jobs:
         with:
           auth-secret: ${{ secrets.AUTH_TOKEN }}
           repo-source: issue-trill
-          repo-destination: issue-transfer
+          repo-destination: tandem
           owner-destination: thinktandem
