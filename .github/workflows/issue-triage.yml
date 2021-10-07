@@ -22,7 +22,7 @@ jobs:
         id: parse
         uses: CumulusDS/get-yaml-paths-action@v0.1.0
         with:
-          file: .github/workflows/tag-mapping.yml
+          file: .github/workflows/files/tag-mapping.yml
           tag: mapping.bug
       - name: Verify output
         run: |
