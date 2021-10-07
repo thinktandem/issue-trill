@@ -23,8 +23,8 @@ jobs:
         with:
           script: |
             github.rest.issues.create({
-              owner: thinktandem,
-              repo: issue-transfer,
+              owner: 'thinktandem',
+              repo: 'issue-transfer',
               title: ${{ github.event.issue.title }},
               body: ${{ github.event.issue.title }},
               assignees: [
