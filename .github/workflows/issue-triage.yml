@@ -2,7 +2,7 @@ name: Issue Triage
 
 on:
   issues:
-    types: [opened]
+    types: [labeled]
 
 jobs:
   issue-creation:
@@ -18,4 +18,11 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-
+      - name: Transfer Issue
+        uses: actions/javascript-action
+        with:
+          milliseconds: 1000
+          auth-secret: ${{ secrets.AUTH_TOKEN }}
+          repo-source: issue-trill
+          repo-destination: issue-transfer
+          owner-destination: thinktandem
