@@ -21,7 +21,7 @@ jobs:
       - name: Get YML Paths
         uses: CumulusDS/get-yaml-paths-action@v0.1.0
         with:
-          file: ./tag-mapping.yml
+          file: './tag-mapping.yml'
           script: console.log(mapping)
       - name: Transfer Issue
         uses: actions/github-script@v5
