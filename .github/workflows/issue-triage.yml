@@ -20,13 +20,13 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
       - name: Parse Mappings
         id: parse
-        uses: CumulusDS/get-yaml-paths-action@v0.1.0
+        uses: KJ002/read-yaml@v1.5
         with:
-          file: tag-mapping.yml
-          tag: mapping.bug
+          file: './files/tag-mapping.yml'
+          key-path: '["mappings"]'
       - name: Verify output
         run: |
-          echo "${{ steps.parse.outputs.tag }}"
+          echo "${{ steps.parse.data }}"
       - name: Transfer Issue
         uses: actions/github-script@v5
         if: ${{ github.event.issue.state == 'open' }}
