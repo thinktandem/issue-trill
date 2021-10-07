@@ -25,8 +25,9 @@ jobs:
           script: |
             let labels = [];
             const l = ${{ github.event.issue.labels }};
-            console.log(l);
-
+            l.forEach((label) => {
+                labels.push(label.name)
+            });
             github.rest.issues.create({
               owner: 'thinktandem',
               repo: 'issue-transfer',
