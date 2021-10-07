@@ -24,7 +24,7 @@ jobs:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
             let labels = [];
-            github.event.issue.labels.forEach((label) => {
+            ${{ github.event.issue.labels }}.forEach((label) => {
                 labels.push(label.name)
             });
             github.rest.issues.create({
