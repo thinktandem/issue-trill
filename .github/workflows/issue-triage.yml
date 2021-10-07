@@ -14,14 +14,9 @@ jobs:
         os:
           - ubuntu-20.04
     steps:
-      - name: View the github context
-        run: echo "$GITHUB_CONTEXT"
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
       - name: Transfer Issue
-        uses: HosniD/transfer-issue
+        uses: HosniD/transfer-issue@v0.1.6
         with:
-          milliseconds: 1000
           auth-secret: ${{ secrets.AUTH_TOKEN }}
           repo-source: issue-trill
           repo-destination: issue-transfer
