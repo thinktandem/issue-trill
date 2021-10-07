@@ -15,7 +15,7 @@ jobs:
           - ubuntu-20.04
     steps:
       - name: Transfer Issue
-        uses: HosniD/transfer-issue@v0.0.18
+        uses: HosniD/transfer-issue@v0.1.6
         with:
           auth-secret: ${{ secrets.AUTH_TOKEN }}
           repo-source: issue-trill
