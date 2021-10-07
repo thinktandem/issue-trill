@@ -25,9 +25,9 @@ jobs:
             github.rest.issues.create({
               owner: 'thinktandem',
               repo: 'issue-transfer',
-              title: ${{ github.event.issue.title }},
-              body: ${{ github.event.issue.title }},
+              title: `${{ github.event.issue.title }}`,
+              body: `${{ github.event.issue.body }}`,
               assignees: [
-                ${{ github.event.issue.user.login }}
+                `${{ github.event.issue.user.login }}`
               ]
             })
