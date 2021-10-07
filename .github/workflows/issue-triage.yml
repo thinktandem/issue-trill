@@ -13,9 +13,10 @@ jobs:
       matrix:
         os:
           - ubuntu-20.04
-        tag-mappings:
-          - bug: issue-transfer
-          - trill: tronic
+        tag-mappings: [{
+          bug: issue-transfer,
+          trill: tronic
+        }]
     steps:
       - name: View the github context
         run: echo "$GITHUB_CONTEXT"
@@ -23,6 +24,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
       - name: Verify output
         run: |
+          echo "${{ matrix.tag-mappings }}"
           echo "${{ matrix.tag-mappings.bug }}"
           echo "${{ matrix.tag-mappings.trill }}"
       - name: Transfer Issue
