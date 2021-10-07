@@ -23,11 +23,16 @@ jobs:
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
+            let labels = [];
+            github.event.issue.labels.forEach((label) => {
+                labels.push(label.name)
+            });
             github.rest.issues.create({
               owner: 'thinktandem',
               repo: 'issue-transfer',
               title: `${{ github.event.issue.title }}`,
               body: `${{ github.event.issue.body }}`,
+              labels: labels,
               assignees: [
                 `${{ github.event.issue.user.login }}`
               ]
@@ -41,5 +46,5 @@ jobs:
               issue_number: `${{ github.event.issue.number }}`,
               owner: `${{ github.event.organization.login }}`,
               repo: `${{ github.event.repository.name }}`,
-              status: 'closed'
+              state: 'closed'
             })
