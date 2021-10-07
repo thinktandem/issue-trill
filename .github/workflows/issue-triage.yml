@@ -29,7 +29,9 @@ jobs:
               title: context.issue.title,
               body: context.issue.body,
               labels: context.issue.labels,
-              assignees: [ context.issue.user.login ]
+              assignees: [
+                `${{ github.event.issue.user.login  }}`
+              ]
             })
       - name: Close Current Issue
         uses: actions/github-script@v5
