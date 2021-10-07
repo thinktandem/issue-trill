@@ -5,7 +5,7 @@ on:
     types: [opened]
 
 jobs:
-  docs-tests:
+  issue-creation:
     runs-on: ${{ matrix.os }}
     env:
       TERM: xterm
