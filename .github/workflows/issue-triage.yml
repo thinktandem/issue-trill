@@ -22,7 +22,7 @@ jobs:
         id: parse
         uses: KJ002/read-yaml@1.5
         with:
-          file: './tag-mapping.yaml'
+          file: 'tag-mapping.yml'
           key-path: '["mappings"]'
       - name: Verify output
         run: |
