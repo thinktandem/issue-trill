@@ -21,6 +21,7 @@ jobs:
       - name: Transfer Issue
         uses: actions/github-script@v5
         with:
+          github-token: ${{ secrets.MY_PAT }}
           script: |
             github.rest.issues.create({
               owner: 'thinktandem',
