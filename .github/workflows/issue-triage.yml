@@ -14,10 +14,7 @@ jobs:
         os:
           - ubuntu-20.04
     steps:
-      - name: Transfer Issue
-        uses: HosniD/transfer-issue@v0.1.6
-        with:
-          auth-secret: ${{ secrets.AUTH_TOKEN }}
-          repo-source: issue-trill
-          repo-destination: tandem
-          owner-destination: thinktandem
+      - name: View the github context
+        run: echo "$GITHUB_CONTEXT"
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
