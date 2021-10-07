@@ -18,6 +18,11 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
+      - name: DIR
+        run: |
+          var fs = require('fs');
+          var files = fs.readdirSync('./');
+          echo files;
       - name: Parse Mappings
         id: parse
         uses: KJ002/read-yaml@1.5
