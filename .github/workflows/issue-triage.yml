@@ -47,7 +47,7 @@ jobs:
           result-encoding: string
       - name: Transfer Issue
         uses: actions/github-script@v5
-        if: ${{ steps.verify-tag.outputs.result != '' }}
+        if: steps.verify-tag.outputs.result != '' && github.event.issue.state == 'open'
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
@@ -60,7 +60,7 @@ jobs:
             })
       - name: Close Current Issue
         uses: actions/github-script@v5
-        if: ${{ github.event.issue.state == 'open' }}
+        if: steps.verify-tag.outputs.result != '' && github.event.issue.state == 'open'
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
