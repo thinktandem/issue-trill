@@ -39,11 +39,14 @@ jobs:
               const mappings = ${{ toJson(matrix.tag-mappings) }};
               Object.entries(mappings).forEach(([key, value]) => {
                   if (labels.includes(key)) {
-                    console.log(value);
+                    return value;
                   }
               });
             }
             return '';
+          result-encoding: string
+      - name: check 
+        run: echo "${{steps.verify-tag.outputs.result}}"
       - name: Transfer Issue
         uses: actions/github-script@v5
         if: ${{ github.event.issue.state == 'open' }}
