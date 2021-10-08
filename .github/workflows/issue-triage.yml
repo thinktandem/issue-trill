@@ -22,11 +22,11 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-      - name: Verify output
-        run: |
-          echo "${{ matrix.tag-mappings }}"
-          echo "${{ matrix.tag-mappings.bug }}"
-          echo "${{ matrix.tag-mappings.trill }}"
+      - name: Verify Tag
+        uses: actions/github-script@v5
+        script: |
+          const labels = ${{ github.event.issue.labels }}
+          echo labels
       - name: Transfer Issue
         uses: actions/github-script@v5
         if: ${{ github.event.issue.state == 'open' }}
