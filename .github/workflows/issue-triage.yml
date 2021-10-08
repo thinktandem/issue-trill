@@ -42,7 +42,7 @@ jobs:
               owner: context.repo.owner,
               repo: `${{ steps.verify-tag.outputs.result }}`,
             });
-            if (labels.filter(e => e.name === 'needs-triage').length <= 0) {
+            if (labels.data.filter(e => e.name === 'needs-triage').length <= 0) {
               console.log('hi');
             }
             
