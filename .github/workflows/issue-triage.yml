@@ -83,8 +83,16 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-            console.log(newIssue.data)
-
+            if (listComments.data.length) {
+              for (const [key, comment] of Object.entries(listComments.data)) {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: `${{ steps.verify-tag.outputs.result }}`,
+                  issue_number: newIssue.data.number,
+                  body: comment.body,
+                });
+              }
+            }
       - name: Close and Comment on Current Issue
         uses: actions/github-script@v5
         if: steps.verify-tag.outputs.result != '' && github.event.issue.state == 'open'
