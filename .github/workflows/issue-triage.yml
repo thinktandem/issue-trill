@@ -42,7 +42,10 @@ jobs:
               owner: context.repo.owner,
               repo: `${{ steps.verify-tag.outputs.result }}`,
             });
-            console.log(labels);
+            if (labels.filter(e => e.name === 'needs-triage').length <= 0) {
+              console.log('hi');
+            }
+            
 
       - name: Transfer Issue
         id: transfer-issue
@@ -61,8 +64,7 @@ jobs:
               repo: `${{ steps.verify-tag.outputs.result }}`,
               title: context.payload.issue.title,
               body: context.payload.issue.body,
-              labels: ['needs-triage'],
-              assignees: [ context.payload.issue.user.login ]
+              labels: []
             });
             return newIssue;
       - name: Close and Comment on Current Issue
