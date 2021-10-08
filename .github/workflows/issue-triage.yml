@@ -67,7 +67,7 @@ jobs:
               repo: `${{ steps.verify-tag.outputs.result }}`,
               title: context.payload.issue.title,
               body: context.payload.issue.body,
-              labels: ['needs-triage']
+              labels: ['Needs Triage']
             });
             return newIssue;
       - name: Close and Comment on Current Issue
