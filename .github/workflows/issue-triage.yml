@@ -37,11 +37,12 @@ jobs:
             const labels = ${{ steps.issue-labels.outputs.result }};
             if (labels.length) {
               const mappings = ${{ toJson(matrix.tag-mappings) }};
-              Object.entries(mappings).forEach(([key, value]) => {
+              let check = Object.entries(mappings).forEach(([key, value]) => {
                   if (labels.includes(key)) {
-                    return `${value}`;
+                    return value;
                   }
               });
+              console.log(check)
             }
             return '';
           result-encoding: string
