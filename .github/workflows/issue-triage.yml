@@ -36,11 +36,12 @@ jobs:
           script: |
             const labels = ${{ steps.issue-labels.outputs.result }};
             if (labels.length) {
-              console.log(Object.entries(${{ matrix.tag-mappings }}));
-              for (const [key, value] of Object.entries(${{ matrix.tag-mappings }})) {
-                console.log(`${key}: ${value}`);
-              }
+              const mappings = ${{ toJson(matrix.tag-mappings) }};
+              Object.entries(mappings).forEach(([key, value]) => {
+                  console.log(`${key} ${value}`);
+              });
             }
+            return '';
       - name: Transfer Issue
         uses: actions/github-script@v5
         if: ${{ github.event.issue.state == 'open' }}
