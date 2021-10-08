@@ -42,7 +42,7 @@ jobs:
               owner: context.repo.owner,
               repo: `${{ steps.verify-tag.outputs.result }}`,
             });
-            if (labels.data.filter(e => e.name === 'needs-triage').length <= 0) {
+            if (labels.data.filter(e => e.name === 'Needs Triage').length <= 0) {
               await github.rest.issues.createLabel({
                 owner: context.repo.owner,
                 repo: `${{ steps.verify-tag.outputs.result }}`,
