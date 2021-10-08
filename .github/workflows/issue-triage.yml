@@ -83,9 +83,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-            for (const [key, value] of Object.entries(listComments)) {
-              console.log(key, value);
-            }
+            console.log(Object.entries(listComments));
       - name: Close and Comment on Current Issue
         uses: actions/github-script@v5
         if: steps.verify-tag.outputs.result != '' && github.event.issue.state == 'open'
