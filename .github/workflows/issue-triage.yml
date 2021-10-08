@@ -18,6 +18,11 @@ jobs:
           trill: tronic
         }]
     steps:
+      - name: check run
+        uses: actions/github-script@v5
+        with:
+          script: |
+            console.log(context.payload.label.name)
       - name: Get Issue Labels
         id: issue-labels
         uses: actions/github-script@v5
