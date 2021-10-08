@@ -26,8 +26,10 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            const labels = ${{ github.event.issue.labels }}
-            console.log(labels.length)
+            const labels = $GITHUB_CONTEXT
+            console.log(labels)
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
       - name: Transfer Issue
         uses: actions/github-script@v5
         if: ${{ github.event.issue.state == 'open' }}
