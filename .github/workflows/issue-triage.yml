@@ -36,7 +36,7 @@ jobs:
           script: |
             const labels = ${{ steps.issue-labels.outputs.result }};
             if (labels.length) {
-              const mappings = "${{ matrix.tag-mappings }}";
+              const mappings = ${{ toJson(matrix.tag-mappings) }};
               console.log(mappings)
             }
       - name: Transfer Issue
