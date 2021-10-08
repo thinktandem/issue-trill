@@ -85,6 +85,7 @@ jobs:
             });
             if (listComments.data.length) {
               for (const [key, comment] of Object.entries(listComments.data)) {
+                console.log(comment)
                 await github.rest.issues.createComment({
                   owner: context.repo.owner,
                   repo: `${{ steps.verify-tag.outputs.result }}`,
