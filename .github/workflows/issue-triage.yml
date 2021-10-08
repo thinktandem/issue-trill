@@ -38,7 +38,7 @@ jobs:
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
-            const labels = github.rest.issues.listLabelsForRepo({
+            const labels = await github.rest.issues.listLabelsForRepo({
               owner: context.repo.owner,
               repo: `${{ steps.verify-tag.outputs.result }}`,
             });
