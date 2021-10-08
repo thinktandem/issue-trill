@@ -13,10 +13,10 @@ jobs:
       matrix:
         os:
           - ubuntu-20.04
-        tag-mappings: [{
+        tag-mappings: {
           bug: issue-transfer,
           trill: tronic
-        }]
+        }
     steps:
       - name: Verify Tag
         id: verify-tag
@@ -32,6 +32,18 @@ jobs:
             }
             return '';
           result-encoding: string
+      - name: Check if Triage Label Needs to be Created
+        uses: actions/github-script@v5
+        if: steps.verify-tag.outputs.result != '' && github.event.issue.state == 'open'
+        with:
+          github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+          script: |
+            const labels = github.rest.issues.listLabelsForRepo({
+              owner: context.repo.owner,
+              repo: `${{ steps.verify-tag.outputs.result }}`,
+            });
+            console.log(labels);
+
       - name: Transfer Issue
         id: transfer-issue
         uses: actions/github-script@v5
@@ -49,7 +61,7 @@ jobs:
               repo: `${{ steps.verify-tag.outputs.result }}`,
               title: context.payload.issue.title,
               body: context.payload.issue.body,
-              labels: labels,
+              labels: ['needs-triage'],
               assignees: [ context.payload.issue.user.login ]
             });
             return newIssue;
