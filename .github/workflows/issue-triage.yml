@@ -68,12 +68,12 @@ jobs:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
             const newIssue = ${{ steps.transfer-issue.outputs.result }};
-            console.log(newIssue.data.html_url)
+            console.log()
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `Trill out the dizzles @${context.payload.issue.user.login}`
+              body: `@${context.payload.issue.user.login} issue has been moved to (${newIssue.data.html_url})[${newIssue.data.html_url}]`
             });
             github.rest.issues.update({
               issue_number: context.issue.number,
