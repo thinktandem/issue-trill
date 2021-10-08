@@ -53,9 +53,10 @@ jobs:
           script: |
             github.rest.issues.create({
               owner: context.repo.owner,
-              repo: steps.verify-tag.outputs.result,
+              repo: `${{ steps.verify-tag.outputs.result }}`,
               title: context.payload.issue.title,
               body: context.payload.issue.body,
+              labels: ${{ steps.issue-labels.outputs.result }},
               assignees: [ context.payload.issue.user.login ]
             })
       - name: Close Current Issue
