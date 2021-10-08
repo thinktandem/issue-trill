@@ -45,11 +45,9 @@ jobs:
             }
             return '';
           result-encoding: string
-      - name: check 
-        run: echo "${{steps.verify-tag.outputs.result}}"
       - name: Transfer Issue
         uses: actions/github-script@v5
-        if: ${{ github.event.issue.state == 'open' }}
+        if: ${{ steps.verify-tag.outputs.result != '' }}
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
