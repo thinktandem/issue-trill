@@ -84,8 +84,8 @@ jobs:
               repo: context.repo.repo,
             });
             if (listComments.data.length) {
-              for (const [key, value] of Object.entries(listComments.data)) {
-                console.log(key, value)
+              for (const [comment] of Object.entries(listComments.data)) {
+                console.log(comment.id)
               }
             }
       - name: Close and Comment on Current Issue
