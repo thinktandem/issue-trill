@@ -68,7 +68,6 @@ jobs:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
             const newIssue = ${{ steps.transfer-issue.outputs.result }};
-            console.log()
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
