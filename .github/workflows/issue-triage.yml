@@ -35,7 +35,10 @@ jobs:
         with:
           script: |
             const labels = ${{ steps.issue-labels.outputs.result }};
-            console.log(labels)
+            if (labels.length) {
+              const mappings = "${{ matrix.tag-mappings }}";
+              console.log(mappings)
+            }
       - name: Transfer Issue
         uses: actions/github-script@v5
         if: ${{ github.event.issue.state == 'open' }}
