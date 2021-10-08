@@ -40,9 +40,7 @@ jobs:
               repo: 'issue-transfer',
               title: context.payload.issue.title,
               body: context.payload.issue.body,
-              assignees: [
-                `${{ github.event.issue.user.login }}`
-              ]
+              assignees: [ context.payload.issue.user.login ]
             })
       - name: Close Current Issue
         uses: actions/github-script@v5
@@ -51,7 +49,7 @@ jobs:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
             github.rest.issues.update({
-              issue_number: `${{ github.event.issue.number }}`,
+              issue_number: context.issue.number,
               owner: `${{ github.event.organization.login }}`,
               repo: `${{ github.event.repository.name }}`,
               state: 'closed'
