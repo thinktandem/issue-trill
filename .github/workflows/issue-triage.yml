@@ -18,6 +18,7 @@ jobs:
           trill: tronic
         }]
     steps:
+      - uses: actions/checkout@v2
       - name: Verify Tag
         id: verify-tag
         uses: actions/github-script@v5
@@ -51,6 +52,6 @@ jobs:
               });
             }
       - name: Transfer issue
-        run: hub issue transfer 12 https://github.com/thinktandem/issue-transfer
+        run: hub issue transfer 12 thinktandem/issue-transfer
         env:
           GITHUB_TOKEN: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
