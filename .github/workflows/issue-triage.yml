@@ -47,7 +47,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: `${{ steps.verify-tag.outputs.result }}`,
                 name: 'Needs Triage',
-                color: '#FF0000',
+                color: 'FF0000',
               });
             }
       - name: Transfer Issue
