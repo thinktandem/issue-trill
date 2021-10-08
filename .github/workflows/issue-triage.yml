@@ -38,14 +38,12 @@ jobs:
             if (labels.length) {
               const mappings = ${{ toJson(matrix.tag-mappings) }};
               let check = Object.entries(mappings).forEach(([key, value]) => {
-                                    console.log('hi')
-                    console.log(value)
+                    console.log(labels)
                   if (labels.includes(key)) {
 
                     return value;
                   }
               });
-              console.log(check)
             }
             return '';
           result-encoding: string
