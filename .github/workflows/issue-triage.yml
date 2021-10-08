@@ -29,6 +29,13 @@ jobs:
               labels.push(label.name)
             }
             return labels;
+      - name: Verify Tag
+        id: verify-tag
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const labels = ${{ steps.issue-labels.outputs.result }};
+            console.log(labels)
       - name: Transfer Issue
         uses: actions/github-script@v5
         if: ${{ github.event.issue.state == 'open' }}
