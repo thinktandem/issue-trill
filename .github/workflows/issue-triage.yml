@@ -18,7 +18,6 @@ jobs:
           trill: tronic
         }]
     steps:
-      - uses: actions/checkout@v2
       - name: Verify Tag
         id: verify-tag
         uses: actions/github-script@v5
@@ -39,4 +38,68 @@ jobs:
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
-            hub issue transfer 10 thinktandem/issue-transfer
+            const labels = await github.rest.issues.listLabelsForRepo({
+              owner: context.repo.owner,
+              repo: `${{ steps.verify-tag.outputs.result }}`,
+            });
+            if (labels.data.filter(e => e.name === 'Needs Triage').length <= 0) {
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner,
+                repo: `${{ steps.verify-tag.outputs.result }}`,
+                name: 'Needs Triage',
+                color: 'FF0000',
+              });
+            }
+      - name: Transfer Issue
+        id: transfer-issue
+        uses: actions/github-script@v5
+        if: steps.verify-tag.outputs.result != '' && github.event.issue.state == 'open'
+        with:
+          github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+          script: |
+            const labels = [];
+            const issueLabels = context.payload.issue.labels;
+            for (const label of issueLabels) {
+              labels.push(label.name)
+            }
+            let newIssue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: `${{ steps.verify-tag.outputs.result }}`,
+              title: context.payload.issue.title,
+              body: context.payload.issue.body,
+              labels: ['Needs Triage']
+            });
+            return newIssue;
+      - name: Transfer Issue Comments
+        id: transfer-issue-comments
+        uses: actions/github-script@v5
+        if: steps.verify-tag.outputs.result != '' && github.event.issue.state == 'open'
+        with:
+          github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+          script: |
+            const newIssue = ${{ steps.transfer-issue.outputs.result }};
+            const listComments = await github.rest.issues.listComments({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            console.log(listComments);
+      - name: Close and Comment on Current Issue
+        uses: actions/github-script@v5
+        if: steps.verify-tag.outputs.result != '' && github.event.issue.state == 'open'
+        with:
+          github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+          script: |
+            const newIssue = ${{ steps.transfer-issue.outputs.result }};
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `@${context.payload.issue.user.login} issue has been moved to [${newIssue.data.html_url}](${newIssue.data.html_url})`
+            });
+            await github.rest.issues.update({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed'
+            });
