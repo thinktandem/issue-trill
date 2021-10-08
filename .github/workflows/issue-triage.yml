@@ -26,9 +26,9 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            console.log(context.issue.title)
-            console.log(context.issue.body)
-            console.log(context.issue.labels)
+            console.log(context.payload.issue.title)
+            console.log(context.payload.issue.body)
+            console.log(context.payload.issue.labels)
       - name: Transfer Issue
         uses: actions/github-script@v5
         if: ${{ github.event.issue.state == 'open' }}
