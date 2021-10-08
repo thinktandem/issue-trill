@@ -51,6 +51,6 @@ jobs:
               });
             }
       - name: Transfer issue
-        run: hub issue transfer 12 thinktandem/issue-transfer
+        run: hub issue transfer 12 issue-transfer
         env:
           GITHUB_TOKEN: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
