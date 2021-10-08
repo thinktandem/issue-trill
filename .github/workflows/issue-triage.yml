@@ -84,7 +84,7 @@ jobs:
               repo: context.repo.repo,
             });
             if (listComments.data.length) {
-              for (const comment of Object.entries(listComments.data)) {
+              for (const [key, comment] of Object.entries(listComments.data)) {
                 console.log(comment)
               }
             }
