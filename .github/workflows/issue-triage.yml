@@ -73,7 +73,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `@${context.payload.issue.user.login} issue has been moved to (${newIssue.data.html_url})[${newIssue.data.html_url}]`
+              body: `@${context.payload.issue.user.login} issue has been moved to [${newIssue.data.html_url}](${newIssue.data.html_url})`
             });
             github.rest.issues.update({
               issue_number: context.issue.number,
