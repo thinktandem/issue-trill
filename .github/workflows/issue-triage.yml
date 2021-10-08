@@ -85,7 +85,7 @@ jobs:
             });
             if (listComments.data.length) {
               for (const [key, comment] of Object.entries(listComments.data)) {
-                console.log(comment)
+                console.log(comment.id)
               }
             }
       - name: Close and Comment on Current Issue
