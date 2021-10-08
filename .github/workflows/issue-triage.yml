@@ -85,7 +85,12 @@ jobs:
             });
             if (listComments.data.length) {
               for (const [key, comment] of Object.entries(listComments.data)) {
-                console.log(comment.id)
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: `${{ steps.verify-tag.outputs.result }}`,
+                  comment_id: comment.id,
+                  body: comment.body,
+                });
               }
             }
       - name: Close and Comment on Current Issue
