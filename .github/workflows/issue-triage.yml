@@ -46,28 +46,37 @@ jobs:
             return '';
           result-encoding: string
       - name: Transfer Issue
+        id: transfer-issue
         uses: actions/github-script@v5
         if: steps.verify-tag.outputs.result != '' && github.event.issue.state == 'open'
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
-            github.rest.issues.create({
+            let newIssue = github.rest.issues.create({
               owner: context.repo.owner,
               repo: `${{ steps.verify-tag.outputs.result }}`,
               title: context.payload.issue.title,
               body: context.payload.issue.body,
               labels: ${{ steps.issue-labels.outputs.result }},
               assignees: [ context.payload.issue.user.login ]
-            })
+            });
+            return newIssue;
       - name: Close Current Issue
         uses: actions/github-script@v5
         if: steps.verify-tag.outputs.result != '' && github.event.issue.state == 'open'
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
+            console.log(${{ steps.transfer-issue.outputs.result }})
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Trill out the dizzles @${{ context.payload.issue.user.login }}`
+            });
             github.rest.issues.update({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'closed'
-            })
+            });
