@@ -53,7 +53,7 @@ jobs:
               assignees: [ context.payload.issue.user.login ]
             });
             return newIssue;
-      - name: Close Current Issue
+      - name: Close and Comment on Current Issue
         uses: actions/github-script@v5
         if: steps.verify-tag.outputs.result != '' && github.event.issue.state == 'open'
         with:
