@@ -36,7 +36,7 @@ jobs:
           script: |
             const labels = ${{ steps.issue-labels.outputs.result }};
             if (labels.length) {
-              for (const [key, value] of Object.entries(matrix.tag-mappings)) {
+              for (const [key, value] of Object.entries(${{ matrix.tag-mappings }})) {
                 console.log(`${key}: ${value}`);
               }
             }
