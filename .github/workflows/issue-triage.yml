@@ -23,13 +23,16 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
       - name: Verify Tag
+        id: verify-tag
         uses: actions/github-script@v5
         with:
           script: |
-            const a = ${{ github.event.issue.labels }};
-            const b = context.payload.issue.labels;
-            console.log(a)
-            console.log(b)
+            const labels = [];
+            const issueLabels = context.payload.issue.labels;
+            for (const label of issueLabels) {
+              labels.push(label.name)
+            }
+            console.log(labels);
       - name: Transfer Issue
         uses: actions/github-script@v5
         if: ${{ github.event.issue.state == 'open' }}
