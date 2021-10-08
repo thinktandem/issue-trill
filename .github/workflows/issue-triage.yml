@@ -18,34 +18,16 @@ jobs:
           trill: tronic
         }]
     steps:
-      - name: check run
-        uses: actions/github-script@v5
-        with:
-          script: |
-            console.log(context.payload.label.name)
-      - name: Get Issue Labels
-        id: issue-labels
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const labels = [];
-            const issueLabels = context.payload.issue.labels;
-            for (const label of issueLabels) {
-              labels.push(label.name)
-            }
-            return labels;
       - name: Verify Tag
         id: verify-tag
         uses: actions/github-script@v5
         with:
           script: |
-            const labels = ${{ steps.issue-labels.outputs.result }};
-            if (labels.length) {
-              const mappings = ${{ toJson(matrix.tag-mappings) }};
-              for (const [key, value] of Object.entries(mappings)) {
-                if (labels.includes(key)) {
-                  return value;
-                }
+            const label = context.payload.label.name;
+            const mappings = ${{ toJson(matrix.tag-mappings) }};
+            for (const [key, value] of Object.entries(mappings)) {
+              if (label == key) {
+                return value;
               }
             }
             return '';
@@ -57,12 +39,17 @@ jobs:
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
+            const labels = [];
+            const issueLabels = context.payload.issue.labels;
+            for (const label of issueLabels) {
+              labels.push(label.name)
+            }
             let newIssue = github.rest.issues.create({
               owner: context.repo.owner,
               repo: `${{ steps.verify-tag.outputs.result }}`,
               title: context.payload.issue.title,
               body: context.payload.issue.body,
-              labels: ${{ steps.issue-labels.outputs.result }},
+              labels: labels,
               assignees: [ context.payload.issue.user.login ]
             });
             return newIssue;
