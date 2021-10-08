@@ -39,19 +39,4 @@ jobs:
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
-            const labels = await github.rest.issues.listLabelsForRepo({
-              owner: context.repo.owner,
-              repo: `${{ steps.verify-tag.outputs.result }}`,
-            });
-            if (labels.data.filter(e => e.name === 'Needs Triage').length <= 0) {
-              await github.rest.issues.createLabel({
-                owner: context.repo.owner,
-                repo: `${{ steps.verify-tag.outputs.result }}`,
-                name: 'Needs Triage',
-                color: 'FF0000',
-              });
-            }
-      - name: Transfer issue
-        run: hub issue transfer 12 thinktandem/issue-transfer
-        env:
-          GITHUB_TOKEN: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+            hub issue transfer 10 thinktandem/issue-transfer
