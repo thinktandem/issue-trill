@@ -13,10 +13,10 @@ jobs:
       matrix:
         os:
           - ubuntu-20.04
-        tag-mappings: {
+        tag-mappings: [{
           bug: issue-transfer,
           trill: tronic
-        }
+        }]
     steps:
       - name: Verify Tag
         id: verify-tag
