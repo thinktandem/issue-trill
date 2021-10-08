@@ -43,10 +43,13 @@ jobs:
               repo: `${{ steps.verify-tag.outputs.result }}`,
             });
             if (labels.data.filter(e => e.name === 'needs-triage').length <= 0) {
-              console.log('hi');
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner,
+                repo: `${{ steps.verify-tag.outputs.result }}`,
+                name: 'Needs Triage',
+                color: '#FF0000',
+              });
             }
-            
-
       - name: Transfer Issue
         id: transfer-issue
         uses: actions/github-script@v5
@@ -64,7 +67,7 @@ jobs:
               repo: `${{ steps.verify-tag.outputs.result }}`,
               title: context.payload.issue.title,
               body: context.payload.issue.body,
-              labels: []
+              labels: ['needs-triage']
             });
             return newIssue;
       - name: Close and Comment on Current Issue
