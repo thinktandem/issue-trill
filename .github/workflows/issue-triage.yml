@@ -80,5 +80,4 @@ jobs:
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
-            const transIssueNumber = $TRANSFERED_ISSUE.substring($TRANSFERED_ISSUE.lastIndexOf('/') + 1);
-            console.log(transIssueNumber)
+            console.log(github)
