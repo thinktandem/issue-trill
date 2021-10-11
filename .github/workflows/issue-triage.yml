@@ -84,11 +84,26 @@ jobs:
             const transferredUrl = process.env.TRANSFERED_ISSUE;
             const transferredIssueNumber = transferredUrl.substring(transferredUrl.lastIndexOf('/') + 1);
 
-            const transferredIssue = await github.rest.issues.update({
+            let transferredIssue = await github.rest.issues.update({
               issue_number: transferredIssueNumber,
               owner: context.repo.owner,
               repo: `${{ steps.verify-tag.outputs.result }}`,
               labels: ['Needs Triage']
             });
 
-            console.log(transferredIssue)
+            const stubIssue = ${{ steps.stub-issue.outputs.result }};
+            const body = `@${context.payload.issue.user.login} this is a stub issue that has been created as a placeholder in this repo. 
+            Your original issue has been moved to [${transferredIssue.data.html_url}](${transferredIssue.data.html_url})`;
+
+            await github.rest.issues.createComment({
+              issue_number: stubIssue.data.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+            await github.rest.issues.lock({
+              issue_number: stubIssue.data.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              lock_reason: 'off-topic'
+            });
