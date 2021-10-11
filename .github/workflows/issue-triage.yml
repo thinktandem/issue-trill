@@ -68,9 +68,11 @@ jobs:
       - name: Transfer Issue
         run: |
           transfer="$(gh issue transfer $ISSUE_NUMBER $TRANSFER_OWNER/$TRANSFER_REPO)"
-          echo $transfer
+          echo 'TRANSFERED_ISSUE='$transfer >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           TRANSFER_OWNER: ${{ github.event.repository.owner.login }}
           TRANSFER_REPO: ${{ steps.verify-tag.outputs.result }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
+      - name: Test ENV
+        run: echo $TRANSFERED_ISSUE
