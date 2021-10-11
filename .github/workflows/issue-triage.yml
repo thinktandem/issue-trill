@@ -66,7 +66,9 @@ jobs:
             });
             return stubIssue;
       - name: Transfer Issue
-        run: gh issue transfer $ISSUE_NUMBER $TRANSFER_OWNER/$TRANSFER_REPO
+        run: |
+          transfer="$(gh issue transfer $ISSUE_NUMBER $TRANSFER_OWNER/$TRANSFER_REPO)"
+          echo $transfer
         env:
           GITHUB_TOKEN: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           TRANSFER_OWNER: ${{ github.event.repository.owner.login }}
