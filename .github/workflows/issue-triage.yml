@@ -81,4 +81,8 @@ jobs:
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
-            console.log(steps.transfer-issue)
+            console.log(${{steps.transfer-issue}})
+            console.log('hi')
+            console.log(${{TRANSFERED_ISSUE}})
+            console.log(${TRANSFERED_ISSUE})
+            console.log(process.env)
