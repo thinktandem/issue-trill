@@ -96,13 +96,13 @@ jobs:
             Your original issue has been moved to [${transferredIssue.data.html_url}](${transferredIssue.data.html_url})`;
 
             await github.rest.issues.createComment({
-              issue_number: stubIssue.data.issue.number,
+              issue_number: stubIssue.data.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: body
             });
             await github.rest.issues.lock({
-              issue_number: stubIssue.data.issue.number,
+              issue_number: stubIssue.data.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               lock_reason: 'off-topic'
