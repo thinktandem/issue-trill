@@ -74,5 +74,11 @@ jobs:
           TRANSFER_OWNER: ${{ github.event.repository.owner.login }}
           TRANSFER_REPO: ${{ steps.verify-tag.outputs.result }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
-      - name: Test ENV
-        run: echo $TRANSFERED_ISSUE
+      - name: Finalize Issue Comments and Tags
+        uses: actions/github-script@v5
+        if: steps.verify-tag.outputs.result != '' && $TRANSFERED_ISSUE !== undefined
+        with:
+          github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
+          script: |
+            const transIssueNumber = $TRANSFERED_ISSUE.substring($TRANSFERED_ISSUE.lastIndexOf('/') + 1);
+            console.log(transIssueNumber)
