@@ -58,17 +58,11 @@ jobs:
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
-            const labels = [];
-            const issueLabels = context.payload.issue.labels;
-            for (const label of issueLabels) {
-              labels.push(label.name)
-            }
             let stubIssue = await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: context.payload.issue.title,
               body: context.payload.issue.body,
-              labels: labels
             });
             return stubIssue;
       - name: Transfer Issue
