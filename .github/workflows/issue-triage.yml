@@ -18,6 +18,7 @@ jobs:
           trill: tronic
         }]
     steps:
+      - uses: actions/checkout@v2
       - name: Verify Tag
         id: verify-tag
         uses: actions/github-script@v5
