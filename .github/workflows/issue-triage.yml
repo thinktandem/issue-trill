@@ -93,6 +93,7 @@ jobs:
 
             const stubIssue = ${{ steps.stub-issue.outputs.result }};
             const body = `@${context.payload.issue.user.login} this is a stub issue that has been created as a placeholder in this repo. 
+            
             Your original issue has been moved to [${transferredIssue.data.html_url}](${transferredIssue.data.html_url})`;
 
             await github.rest.issues.createComment({
@@ -100,6 +101,12 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: body
+            });
+            await github.rest.issues.update({
+              issue_number: stubIssue.data.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed'
             });
             await github.rest.issues.lock({
               issue_number: stubIssue.data.number,
