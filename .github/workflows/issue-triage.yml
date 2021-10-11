@@ -76,7 +76,7 @@ jobs:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
       - name: Finalize Issue Comments and Tags
         uses: actions/github-script@v5
-        if: steps.verify-tag.outputs.result != '' && $TRANSFERED_ISSUE !== undefined
+        if: steps.verify-tag.outputs.result != ''
         with:
           github-token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
           script: |
