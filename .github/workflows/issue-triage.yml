@@ -57,7 +57,7 @@ jobs:
         if: steps.verify-tag.outputs.result != ''
         with:
           github_token: ${{ secrets.TRANSFER_ISSUE_TOKEN }}
-          destination_repo: `${{ steps.verify-tag.outputs.result }}`
+          destination_repo: ${{ steps.verify-tag.outputs.result }}
       - name: Finalize Issue Tags
         uses: actions/github-script@v5
         if: steps.transfer-issue.outputs.transferred_issue_number != ''
